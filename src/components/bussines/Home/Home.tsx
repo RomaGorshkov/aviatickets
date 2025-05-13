@@ -1,14 +1,27 @@
 import React from 'react';
-import { Grid } from '@mui/material';
+
+import { useAppDispatch, useAppSelector } from '../../../store/storeHooks';
+import { fetchFlights } from '../../../store/slices/flightsSlice';
+import FlightCard from '../FlightCard/FlightCard';
 
 import styles from './Home.module.scss';
 
 const Home: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const { flights } = useAppSelector((state) => state.flights);
+
+  React.useEffect(() => {
+    dispatch(fetchFlights());
+  }, [dispatch]);
+
   return (
-    <Grid className={styles.home}>
-      <h1>Welcome to the Home Page</h1>
-      <p>This is the main content of the home page.</p>
-    </Grid>
+    <div className={styles.home}>
+      <div className={styles.home__content}>
+        {flights.map((item) => (
+          <FlightCard key={item.id} {...item} />
+        ))}
+      </div>
+    </div>
   );
 };
 

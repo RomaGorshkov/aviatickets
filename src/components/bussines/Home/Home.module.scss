@@ -1,1 +1,11 @@
+.home {
+  padding-top: 100px;
 
+  &__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+}

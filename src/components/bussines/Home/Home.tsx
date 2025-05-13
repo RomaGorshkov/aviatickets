@@ -2,27 +2,19 @@ import React from 'react';
 
 import { useAppDispatch, useAppSelector } from '../../../store/storeHooks';
 import { fetchFlights } from '../../../store/slices/flightsSlice';
-import FlightCard from '../FlightCard/FlightCard';
-
-import styles from './Home.module.scss';
+import FlightCards from '../../shared/FlightCards/FlightCard';
+import FlightsListLayout from '../../../layouts/FlightsListLayout/FlightsListLayout';
+import Preloader from '../../shared/Preloader/Preloader';
 
 const Home: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { flights } = useAppSelector((state) => state.flights);
+  const { flights, isLoading } = useAppSelector((state) => state.flights);
 
   React.useEffect(() => {
     dispatch(fetchFlights());
   }, [dispatch]);
 
-  return (
-    <div className={styles.home}>
-      <div className={styles.home__content}>
-        {flights.map((item) => (
-          <FlightCard key={item.id} {...item} />
-        ))}
-      </div>
-    </div>
-  );
+  return <FlightsListLayout>{isLoading ? <Preloader /> : flights.map((item) => <FlightCards key={item.id} {...item} />)}</FlightsListLayout>;
 };
 
 export default Home;

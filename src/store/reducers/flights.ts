@@ -6,6 +6,7 @@ import type { Flights } from '../../types';
 interface FlightsState {
   flights: Flights[];
   favoriteFlights: Flights[];
+  cartFlights: Flights[];
   isLoading: boolean;
   error: string | null;
 }
@@ -13,6 +14,7 @@ interface FlightsState {
 const initialState: FlightsState = {
   flights: [],
   favoriteFlights: JSON.parse(localStorage.getItem('favoritesFlights') || '[]'),
+  cartFlights: JSON.parse(localStorage.getItem('cartFlights') || '[]'),
   isLoading: false,
   error: null,
 };
@@ -32,6 +34,17 @@ export const flightsSlice = createSlice({
 
       localStorage.setItem('favoritesFlights', JSON.stringify(state.favoriteFlights));
     },
+    toggleCartItem: (state, action) => {
+      const index = state.cartFlights.findIndex((item) => item.id === action.payload.id);
+
+      if (index === -1) {
+        state.cartFlights.push(action.payload);
+      } else {
+        state.cartFlights.splice(index, 1);
+      }
+
+      localStorage.setItem('cartFlights', JSON.stringify(state.cartFlights));
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -50,5 +63,5 @@ export const flightsSlice = createSlice({
   },
 });
 
-export const { toggleFavorite } = flightsSlice.actions;
+export const { toggleFavorite, toggleCartItem } = flightsSlice.actions;
 export const flightsReducer = flightsSlice.reducer;

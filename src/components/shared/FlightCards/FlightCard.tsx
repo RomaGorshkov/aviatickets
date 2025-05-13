@@ -2,7 +2,7 @@ import React from 'react';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
-import { toggleFavorite } from '../../../store/reducers/flights';
+import { toggleCartItem, toggleFavorite } from '../../../store/reducers/flights';
 import type { Flights } from '../../../types';
 import { useAppDispatch, useAppSelector } from '../../../store/storeHooks';
 
@@ -10,7 +10,7 @@ import styles from './FlightCard.module.scss';
 
 const FlightCards: React.FC<Flights> = ({ id, airline, from, to, departureTime, arrivalTime, price, terminal, gate, tickets }) => {
   const dispatch = useAppDispatch();
-  const { favoriteFlights } = useAppSelector((state) => state.flights);
+  const { favoriteFlights, cartFlights } = useAppSelector((state) => state.flights);
 
   const formatTime = (iso: string) => new Date(iso).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   const formatDate = (iso: string) => new Date(iso).toLocaleDateString();
@@ -19,9 +19,17 @@ const FlightCards: React.FC<Flights> = ({ id, airline, from, to, departureTime, 
     dispatch(toggleFavorite({ id, airline, from, to, departureTime, arrivalTime, price, terminal, gate, tickets }));
   };
 
+  const handleToggleCart = () => {
+    dispatch(toggleCartItem({ id, airline, from, to, departureTime, arrivalTime, price, terminal, gate, tickets }));
+  };
+
   const isFavorite = React.useMemo(() => {
     return favoriteFlights.some((fav) => fav.id === id);
   }, [favoriteFlights, id]);
+
+  const isCartItem = React.useMemo(() => {
+    return cartFlights.some((item) => item.id === id);
+  }, [cartFlights, id]);
 
   return (
     <div className={styles.flightCard}>
@@ -54,7 +62,7 @@ const FlightCards: React.FC<Flights> = ({ id, airline, from, to, departureTime, 
         ) : (
           <FavoriteBorderIcon className={styles.flightCard__noFavorite} onClick={handleToggleFavorites} />
         )}
-        <button>Select ticket</button>
+        {isCartItem ? <button onClick={handleToggleCart}>Remove from cart</button> : <button onClick={handleToggleCart}>Add to cart</button>}
       </div>
     </div>
   );

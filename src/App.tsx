@@ -4,6 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 import Header from './components/shared/Header/Header';
 import HomePage from './pages/HomePage/HomePage';
 import FavoriteTicketsPage from './pages/FavoriteTicketsPage/FavoriteTicketsPage';
+import CartPage from './pages/CartPage/CartPage';
 
 const App: React.FC = () => {
   return (
@@ -12,6 +13,7 @@ const App: React.FC = () => {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/favorites" element={<FavoriteTicketsPage />} />
+        <Route path="/cart" element={<CartPage />} />
       </Routes>
     </div>
   );

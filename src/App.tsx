@@ -1,17 +1,17 @@
-import { Grid } from '@mui/material';
 import React from 'react';
-import Header from './components/shared/Header/Header';
 import { Route, Routes } from 'react-router-dom';
+
+import Header from './components/shared/Header/Header';
 import HomePage from './pages/HomePage/HomePage';
 
 const App: React.FC = () => {
   return (
-    <Grid>
+    <div>
       <Header />
       <Routes>
         <Route path="/" element={<HomePage />} />
       </Routes>
-    </Grid>
+    </div>
   );
 };
 

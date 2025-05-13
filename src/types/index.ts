@@ -1,9 +1,9 @@
 export interface Flights {
   id: string;
-  airlane: string;
+  airline: string;
   from: string;
   to: string;
-  depatureTime: string;
+  departureTime: string;
   arrivalTime: string;
   price: number;
   terminal: string;

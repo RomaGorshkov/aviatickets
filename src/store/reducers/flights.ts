@@ -5,12 +5,14 @@ import type { Flights } from '../../types';
 
 interface FlightsState {
   flights: Flights[];
+  favoriteFlights: Flights[];
   isLoading: boolean;
   error: string | null;
 }
 
 const initialState: FlightsState = {
   flights: [],
+  favoriteFlights: JSON.parse(localStorage.getItem('favoritesFlights') || '[]'),
   isLoading: false,
   error: null,
 };
@@ -18,7 +20,19 @@ const initialState: FlightsState = {
 export const flightsSlice = createSlice({
   name: 'flights',
   initialState,
-  reducers: {},
+  reducers: {
+    toggleFavorite: (state, action) => {
+      const index = state.favoriteFlights.findIndex((fav) => fav.id === action.payload.id);
+
+      if (index === -1) {
+        state.favoriteFlights.push(action.payload);
+      } else {
+        state.favoriteFlights.splice(index, 1);
+      }
+
+      localStorage.setItem('favoritesFlights', JSON.stringify(state.favoriteFlights));
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchFlights.pending, (state) => {
@@ -36,4 +50,5 @@ export const flightsSlice = createSlice({
   },
 });
 
+export const { toggleFavorite } = flightsSlice.actions;
 export const flightsReducer = flightsSlice.reducer;

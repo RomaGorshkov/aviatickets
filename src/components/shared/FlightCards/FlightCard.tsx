@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from '../../../store/storeHooks';
 
 import styles from './FlightCard.module.scss';
 
-const FlightCard: React.FC<Flights> = ({ id, airline, from, to, departureTime, arrivalTime, price, terminal, gate, tickets }) => {
+const FlightCards: React.FC<Flights> = ({ id, airline, from, to, departureTime, arrivalTime, price, terminal, gate, tickets }) => {
   const dispatch = useAppDispatch();
   const { favoriteFlights } = useAppSelector((state) => state.flights);
 
@@ -60,4 +60,4 @@ const FlightCard: React.FC<Flights> = ({ id, airline, from, to, departureTime, a
   );
 };
 
-export default FlightCard;
+export default FlightCards;

@@ -1,19 +1,19 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 import { toggleCartItem, toggleFavorite } from '../../../store/reducers/flights';
 import type { Flights } from '../../../types';
 import { useAppDispatch, useAppSelector } from '../../../store/storeHooks';
+import { formatDate, formatTime } from '../../../utils';
 
 import styles from './FlightCard.module.scss';
 
 const FlightCards: React.FC<Flights> = ({ id, airline, from, to, departureTime, arrivalTime, price, terminal, gate, tickets }) => {
   const dispatch = useAppDispatch();
   const { favoriteFlights, cartFlights } = useAppSelector((state) => state.flights);
-
-  const formatTime = (iso: string) => new Date(iso).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-  const formatDate = (iso: string) => new Date(iso).toLocaleDateString();
+  const navigate = useNavigate();
 
   const handleToggleFavorites = () => {
     dispatch(toggleFavorite({ id, airline, from, to, departureTime, arrivalTime, price, terminal, gate, tickets }));
@@ -32,7 +32,7 @@ const FlightCards: React.FC<Flights> = ({ id, airline, from, to, departureTime, 
   }, [cartFlights, id]);
 
   return (
-    <div className={styles.flightCard}>
+    <div className={styles.flightCard} onClick={() => navigate(`/flights/${id}`)}>
       <div className={styles.flightCard__leftSide}>
         <div className={styles.flightCard__price}>${price}</div>
         <p>
@@ -58,11 +58,30 @@ const FlightCards: React.FC<Flights> = ({ id, airline, from, to, departureTime, 
       </div>
       <div className={styles.flightCard__buttons}>
         {isFavorite ? (
-          <FavoriteIcon className={styles.flightCard__isFavorite} onClick={handleToggleFavorites} />
+          <FavoriteIcon
+            className={styles.flightCard__isFavorite}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleToggleFavorites();
+            }}
+          />
         ) : (
-          <FavoriteBorderIcon className={styles.flightCard__noFavorite} onClick={handleToggleFavorites} />
+          <FavoriteBorderIcon
+            className={styles.flightCard__noFavorite}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleToggleFavorites();
+            }}
+          />
         )}
-        {isCartItem ? <button onClick={handleToggleCart}>Remove from cart</button> : <button onClick={handleToggleCart}>Add to cart</button>}
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            handleToggleCart();
+          }}
+        >
+          {isCartItem ? 'Remove from cart' : 'Add to cart'}
+        </button>
       </div>
     </div>
   );

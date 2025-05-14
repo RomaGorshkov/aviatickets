@@ -17,7 +17,7 @@ const Cart: React.FC = () => {
         <>
           <h3>Total amount in your cart: ${totalPrice}</h3>
           {cartFlights.map((item) => (
-            <FlightCards {...item} />
+            <FlightCards key={item.id} {...item} />
           ))}
         </>
       )}

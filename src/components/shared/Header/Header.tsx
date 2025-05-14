@@ -1,6 +1,5 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { Grid } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
@@ -15,14 +14,14 @@ const headerLinks = [
 
 const Header: React.FC = () => {
   return (
-    <Grid className={styles.header} container>
+    <div className={styles.header}>
       {headerLinks.map(({ to, label, icon }) => (
         <NavLink key={to} to={to} className={({ isActive }) => (isActive ? `${styles.header__link} ${styles['header__link--active']}` : styles.header__link)}>
           {icon}
-          <Grid>{label}</Grid>
+          <div>{label}</div>
         </NavLink>
       ))}
-    </Grid>
+    </div>
   );
 };
 

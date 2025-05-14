@@ -1,0 +1,77 @@
+.ticketCard {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+
+  &__content {
+    padding: 10px;
+    width: 30%;
+    height: 25%;
+    border: 1px solid var(--color-border);
+    border-radius: 20px;
+    box-shadow: rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.3s ease;
+    box-sizing: border-box;
+  }
+
+  &__contentHeader {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  &__contentPrice {
+    display: flex;
+    justify-content: center;
+    color: var(--color-accent);
+  }
+
+  &__contentInfo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__contentTime {
+    display: flex;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: bold;
+    padding-bottom: 5px;
+  }
+
+  &__contentRoad {
+    font-size: 22px;
+    font-weight: bold;
+  }
+
+  &__contentTicketBuy {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 50%;
+
+    button {
+      border-radius: 16px;
+      background-color: var(--color-button);
+      width: 30%;
+      height: 48px;
+      padding: 0 16px;
+      border: 0;
+      align-items: center;
+      color: white;
+      transition:
+        background-color 0.3s ease,
+        box-shadow 0.3s ease;
+
+      &:hover {
+        background-color: var(--color-button-hover);
+        cursor: pointer;
+        box-shadow: 0 4px 12px var(--color-bg-component);
+      }
+    }
+  }
+}

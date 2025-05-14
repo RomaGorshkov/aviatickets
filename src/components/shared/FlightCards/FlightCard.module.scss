@@ -11,6 +11,11 @@
   transition: box-shadow 0.3s ease;
   background-color: #fff;
 
+  &:hover {
+    cursor: pointer;
+    background-color: #ddd;
+  }
+
   &__leftSide {
     text-align: center;
   }
